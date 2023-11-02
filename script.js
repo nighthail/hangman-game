@@ -5,21 +5,18 @@ let pickedWord = ""
 let tempword = pickedWord
 let underScore = "-"
 
-
+import { hangmanWords } from "./wordlist.js"
 
 getRandomWord()
 
 function getRandomWord() { // RANDOMIZAR ett ord ur en lista av ord
-  let wordList = 'BENJAMIN LINUS PROGRAMMERING JAVASCRIPT DATOR MACBOOK'
+  let wordList = hangmanWords
   const words = wordList.split(' ')
   let NUMB = Math.floor(Math.random() * 7)
   pickedWord = words[NUMB]
   tempword = pickedWord
   genclue(pickedWord)
 }
-
-
-
 
 
 function genclue() {
@@ -95,3 +92,12 @@ function compareWords(guessedword) {
   }
 }
 
+
+/*
+
+function replaceByIndex(text, placement) {
+  let before = text.slice(0, placement)
+  let after = text.slice(placement)
+  let newUnderscore = before + " _ " + after
+  return newUnderscore
+}*/
