@@ -5,20 +5,32 @@ let pickedWord = ""
 let tempword = pickedWord
 let underScore = "-"
 
+
 import { hangmanWords } from "./wordlist.js"
 
 //lägg detta i highscore.js och gör om den till en klass som sparar både namn och highscore
-getUser()
 
-function getUser() {
-  let username = prompt("Please enter your name", "Harry Potter");
-  if (username == null || username == "") {
-    username = "Anonymous"
-  } else {
-    localStorage.setItem('user', username)
+
+class User {
+  constructor(name, score) {
+    this.name = name;
+    this.score = score;
+    localStorage.setItem(name, score)
   }
 }
 
+
+function getUser() {
+  let user = prompt("Please enter your name", "Harry Potter");
+  if (user == null || user == "") {
+    user = "Anonymous"
+  }
+  user = new User(user, 0)
+  document.getElementById("currentUser").innerText = user.name
+  document.getElementById("currentScore").innerText = user.score
+
+}
+getUser()
 //
 
 getRandomWord()
@@ -80,6 +92,8 @@ function compareWords(guessedword) {
         document.getElementById("word").innerText = underScore
         if (document.getElementById("word").innerText == pickedWord) {
           alert("Congrats!")
+          // Om du vinner
+          winTracker()
 
         }
 
@@ -101,6 +115,8 @@ function compareWords(guessedword) {
     else if (guessedword == pickedWord || completeGuess == pickedWord) {
       alert("Congrats!")
       document.getElementById("word").innerText = pickedWord
+      // Om du vinner
+      winTracker()
 
     }
     else { // BER DIG ANVÄNDA ENBART ETT ORD
@@ -109,3 +125,6 @@ function compareWords(guessedword) {
   }
 }
 
+function winTracker() {
+  userScore += 1
+}
