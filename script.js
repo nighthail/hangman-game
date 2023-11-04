@@ -5,13 +5,14 @@ let pickedWord = ""
 let tempword = pickedWord
 let underScore = "-"
 
+let user = 'Anonymous'
 
 import { hangmanWords } from "./wordlist.js"
 
 //lägg detta i highscore.js och gör om den till en klass som sparar både namn och highscore
 
 
-class User {
+class Player {
   constructor(name, score) {
     this.name = name;
     this.score = score;
@@ -21,13 +22,13 @@ class User {
 
 
 function getUser() {
-  let user = prompt("Please enter your name", "Harry Potter");
+  user = prompt("Please enter your name", "Harry Potter")
   if (user == null || user == "") {
     user = "Anonymous"
   }
-  user = new User(user, 0)
+  user = new Player(user, 0)
   document.getElementById("currentUser").innerText = user.name
-  document.getElementById("currentScore").innerText = user.score
+  userScoreUpdate(user.score)
 
 }
 getUser()
@@ -39,7 +40,7 @@ function getRandomWord() { // RANDOMIZAR ett ord ur en lista av ord
   let wordList = hangmanWords
   const words = wordList.split(' ')
   let NUMB = Math.floor(Math.random() * 7)
-  pickedWord = words[NUMB]
+  pickedWord = 'BENJAMIN'//words[NUMB] (Temporary word for debug purposes)
   tempword = pickedWord
   genclue(pickedWord)
 }
@@ -66,19 +67,20 @@ document.getElementById("submit").onclick = function submit() {
 
 function compareWords(guessedword) {
   // if som räknar antalet försök
-  if (tries > 5) {
+  if (tries > 1) {
     alert("You lost :( The word was: " + pickedWord)
+    let user = document.getElementById("currentUser").innerText
+    let score = document.getElementById("currentScore").innerText
+    document.getElementById("highscore").innerHTML = user + " : " + score
+    //localStorage.setItem(highscore, name + " : " + score)
+
   }
   else {
-
-
     if (guessedword.length == 1) {// ser till att det bara finns en bokstav
 
       if (pickedWord.includes(guessedword) && !correctGuesses.includes(guessedword)) { // Kollar att gissningen är rätt och inte upprepad
         correctGuesses = correctGuesses + guessedword
         let recuringLetter = pickedWord.split(guessedword).length - 1 // ta fram antalet ggr bokstaven förekommer
-
-
 
         // For loop som kollar att bokstaven ersätts på ALLA ställen
         for (let index = 0; index < recuringLetter; index++) {
@@ -89,10 +91,17 @@ function compareWords(guessedword) {
           underScore = before + guessedword + after
 
         }
+
+        user.score += 10
+        userScoreUpdate(user.score)
+
+
         document.getElementById("word").innerText = underScore
         if (document.getElementById("word").innerText == pickedWord) {
           alert("Congrats!")
           // Om du vinner
+          user.score += 50
+          userScoreUpdate(user.score)
           winTracker()
 
         }
@@ -110,11 +119,18 @@ function compareWords(guessedword) {
         tries = tries + 1
         document.getElementById("tries").innerText = tries + "/5"
         document.getElementById("hangmanImage").style.content = "url('img/" + tries + ".png')"
+        //console.log(user.score)
+        user.score -= 5
+        userScoreUpdate(user.score)
+
       }
     }
-    else if (guessedword == pickedWord || completeGuess == pickedWord) {
+    else if (guessedword == pickedWord) {
       alert("Congrats!")
       document.getElementById("word").innerText = pickedWord
+      user.score += 100
+      userScoreUpdate(user.score)
+
       // Om du vinner
       winTracker()
 
@@ -126,5 +142,11 @@ function compareWords(guessedword) {
 }
 
 function winTracker() {
-  userScore += 1
+  // något som håller reda på score under spelandet och laddar om med nytt ord utan att fråga om ny användare.
+  getRandomWord()
 }
+
+function userScoreUpdate(score) {
+  document.getElementById("currentScore").innerText = score
+}
+
