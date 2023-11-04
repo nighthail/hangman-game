@@ -7,6 +7,20 @@ let underScore = "-"
 
 import { hangmanWords } from "./wordlist.js"
 
+//lägg detta i highscore.js och gör om den till en klass som sparar både namn och highscore
+getUser()
+
+function getUser() {
+  let username = prompt("Please enter your name", "Harry Potter");
+  if (username == null || username == "") {
+    username = "Anonymous"
+  } else {
+    localStorage.setItem('user', username)
+  }
+}
+
+//
+
 getRandomWord()
 
 function getRandomWord() { // RANDOMIZAR ett ord ur en lista av ord
@@ -30,8 +44,12 @@ function genclue() {
 
 
 document.getElementById("submit").onclick = function submit() {
-  guess = document.getElementById("guessbox").value.toUpperCase() // tar in den gissade bokstaven
-  compareWords(guess)
+  let guess = document.getElementById("guessbox").value.toUpperCase() // tar in den gissade bokstaven
+  if (guess == '') {
+    return
+  } else {
+    compareWords(guess)
+  }
 }
 
 function compareWords(guessedword) {
@@ -78,7 +96,6 @@ function compareWords(guessedword) {
         tries = tries + 1
         document.getElementById("tries").innerText = tries + "/5"
         document.getElementById("hangmanImage").style.content = "url('img/" + tries + ".png')"
-        //alert("Keep guessing")
       }
     }
     else if (guessedword == pickedWord || completeGuess == pickedWord) {
@@ -92,12 +109,3 @@ function compareWords(guessedword) {
   }
 }
 
-
-/*
-
-function replaceByIndex(text, placement) {
-  let before = text.slice(0, placement)
-  let after = text.slice(placement)
-  let newUnderscore = before + " _ " + after
-  return newUnderscore
-}*/

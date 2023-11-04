@@ -4,26 +4,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Hang Man</title>
 </head>
 
 <body>
-  <div style="margin: auto;
+  <div id="highscore" class="flex-container" style="display: flex">
+    <div style="margin: 10px;
+  padding: 20px;
+  font-size: 20px;">
+      <h2>Highscore</h2>
+      <ul>
+        <li>Player 1</li>
+        <li>Player 1</li>
+        <li>Player 1</li>
+      </ul>
+    </div>
+
+    <div style="margin: auto;
   width: 50%;
   border: 3px solid black;
   padding: 10px;
   text-align: center;
   padding: 20px;
   font-size: 40px;">
-    <label>Hang man</label><br>
-    <label id="tries">0/5</label><br>
-    <br>
-    <label id="word"></label><br>
-    <div id="hangmanImage" style="content: url(./img/0.png); width: 30%; margin: auto;"></div><br>
-    <label id="guesses" style="text-decoration: line-through"></label><br>
-    <input type="text" id="guessbox" value="j">
-    <button type="button" id="submit">Guess</button>
+      <label>Hang man</label><br>
+      <label id="tries">0/5</label><br>
+      <br>
+      <label id="word"></label><br>
+      <div id="hangmanImage" style="content: url(./img/0.png); width: 30%; margin: auto;"></div><br>
+      <label id="guesses" style="text-decoration: line-through"></label><br>
+      <input type="text" id="guessbox" value="">
+      <button type="button" id="submit">Guess</button>
 
+
+    </div>
+    <div style="margin: 10px;
+      padding: 20px;
+      font-size: 20px;">
+      <h2>New Player</h2>
+    </div>
 
   </div>
   <script type="module" src="script.js"></script>
