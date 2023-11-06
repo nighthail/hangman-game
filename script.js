@@ -1,16 +1,18 @@
+
 let passedGuesses = ""
 let correctGuesses = ""
 let tries = 0
 let pickedWord = ""
 let tempword = pickedWord
-let underScore = "-"
+let underScore = "_"
 
-let user = 'Anonymous'
+let user = ''
 
 import { hangmanWords } from "./wordlist.js"
 
 //lägg detta i highscore.js och gör om den till en klass som sparar både namn och highscore
 
+// Bugg: sätter rätt bokstav som felaktig
 
 class Player {
   constructor(name, score) {
@@ -24,7 +26,8 @@ class Player {
 function getUser() {
   user = prompt("Please enter your name", "Harry Potter")
   if (user == null || user == "") {
-    user = "Anonymous"
+    let anonNum = Math.floor(100 + Math.random() * 900)
+    user = "Anonymous" + anonNum
   }
   user = new Player(user, 0)
   document.getElementById("currentUser").innerText = user.name
@@ -48,7 +51,7 @@ function getRandomWord() { // RANDOMIZAR ett ord ur en lista av ord
 
 function genclue() {
   for (let index = 1; index < pickedWord.length; index++) { // genererar ledtråd
-    underScore += "-"
+    underScore += "_"
     document.getElementById("word").innerText = underScore
 
   }
@@ -58,6 +61,7 @@ function genclue() {
 
 document.getElementById("submit").onclick = function submit() {
   let guess = document.getElementById("guessbox").value.toUpperCase() // tar in den gissade bokstaven
+  document.getElementById("guessbox").value = ''
   if (guess == '') {
     return
   } else {
@@ -109,7 +113,7 @@ function compareWords(guessedword) {
 
       }
 
-      else if (correctGuesses.includes(guessedword)) { // Om du upprepar samma bokstav
+      if (passedGuesses.includes(guessedword)) { // Om du upprepar samma bokstav
         alert("You need to pick a new letter")
       }
 

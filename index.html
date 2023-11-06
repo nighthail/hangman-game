@@ -4,38 +4,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href='https://fonts.googleapis.com/css?family=Architects Daughter' rel='stylesheet'>
   <title>Hang Man</title>
 </head>
 
 <body>
   <div class="flex-container" style="display: flex">
-    <div id="highscore" style="margin: 10px;
-      padding: 20px;
-      font-size: 30px; font-weight: bold;">
-      Highest Score
+    <div id="highscore">
+      HighScore
     </div>
 
-    <div style="margin: auto;
-  width: 50%;
-  border: 3px solid black;
-  padding: 10px;
-  text-align: center;
-  padding: 20px;
-  font-size: 40px;">
+    <div id="hangmanBox">
       <label>Hang man</label><br>
       <label id="tries">0/5</label><br>
       <br>
       <label id="word"></label><br>
       <div id="hangmanImage" style="content: url(./img/0.png); width: 30%; margin: auto;"></div><br>
       <label id="guesses" style="text-decoration: line-through"></label><br>
-      <input type="text" id="guessbox" value="">
+      <input type="text" id="guessbox" class="w3-input">
       <button type="button" id="submit">Guess</button>
 
 
     </div>
-    <div style="margin: 10px;
-      padding: 20px;
-      font-size: 30px; font-weight: bold;">
+    <div id="userBox">
       <div id="currentUser">
         Current User
       </div>
