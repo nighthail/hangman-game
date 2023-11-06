@@ -10,8 +10,7 @@ let user = ''
 
 import { hangmanWords } from "./wordlist.js"
 
-//lägg detta i highscore.js och gör om den till en klass som sparar både namn och highscore
-
+// lägg detta i highscore.js och gör om den till en klass som sparar både namn och highscore
 // Bugg: sätter rätt bokstav som felaktig
 
 class Player {
@@ -32,7 +31,6 @@ function getUser() {
   user = new Player(user, 0)
   document.getElementById("currentUser").innerText = user.name
   userScoreUpdate(user.score)
-
 }
 getUser()
 //
@@ -53,9 +51,7 @@ function genclue() {
   for (let index = 1; index < pickedWord.length; index++) { // genererar ledtråd
     underScore += "_"
     document.getElementById("word").innerText = underScore
-
   }
-
 }
 
 
@@ -86,6 +82,9 @@ function compareWords(guessedword) {
         correctGuesses = correctGuesses + guessedword
         let recuringLetter = pickedWord.split(guessedword).length - 1 // ta fram antalet ggr bokstaven förekommer
 
+        user.score += 10
+        userScoreUpdate(user.score)
+
         // For loop som kollar att bokstaven ersätts på ALLA ställen
         for (let index = 0; index < recuringLetter; index++) {
           let placement = tempword.indexOf(guessedword) + 1
@@ -96,25 +95,23 @@ function compareWords(guessedword) {
 
         }
 
-        user.score += 10
-        userScoreUpdate(user.score)
-
-
         document.getElementById("word").innerText = underScore
+
         if (document.getElementById("word").innerText == pickedWord) {
-          alert("Congrats!")
+          alert("Congrats! The correct word was " + pickedWord)
           // Om du vinner
           user.score += 50
           userScoreUpdate(user.score)
-          winTracker()
-
+          return
         }
 
+        return
 
       }
 
       if (passedGuesses.includes(guessedword)) { // Om du upprepar samma bokstav
         alert("You need to pick a new letter")
+        return
       }
 
       else {
@@ -130,7 +127,7 @@ function compareWords(guessedword) {
       }
     }
     else if (guessedword == pickedWord) {
-      alert("Congrats!")
+      alert("Congrats! The correct word was " + pickedWord)
       document.getElementById("word").innerText = pickedWord
       user.score += 100
       userScoreUpdate(user.score)
